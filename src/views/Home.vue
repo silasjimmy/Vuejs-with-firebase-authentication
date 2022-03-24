@@ -6,7 +6,7 @@
       beatae esse dolorum voluptate, quibusdam perferendis aliquid est.
     </p>
 
-    <v-btn link to="/sign-up">Register</v-btn>
+    <v-btn link color="primary" class="text-none" to="/sign-up">Register</v-btn>
   </v-container>
 </template>
 

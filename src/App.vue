@@ -15,14 +15,15 @@
         link
         text
         to="/about"
+        active-class="primary--text"
         class="mx-2 text-none"
         v-if="!$store.loggedIn"
         >About</v-btn
       >
       <v-btn
-        outlined
+        text
         link
-        active-class="primary white--text"
+        active-class="primary--text"
         class="text-none"
         to="/sign-in"
         v-if="!$store.loggedIn"
@@ -30,7 +31,7 @@
       >
     </v-app-bar>
 
-    <v-navigation-drawer app permanent v-if="$store.loggedIn">
+    <v-navigation-drawer app permanent v-if="$store.state.loggedIn">
       <v-list-item two-line>
         <v-list-item-avatar class="b"></v-list-item-avatar>
         <v-list-item-content>

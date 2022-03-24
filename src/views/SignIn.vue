@@ -28,14 +28,18 @@
             v-model="password"
           ></v-text-field>
         </v-form>
-        <v-btn color="primary" :loading="loadEmailLogin" @click="emailLogin"
+        <v-btn
+          color="primary"
+          class="text-none"
+          :loading="loadEmailLogin"
+          @click="emailLogin"
           >Log in</v-btn
         >
       </v-card-text>
       <v-card-text class="py-0">
         <v-btn text link to="/sign-up" class="text-none"
           >Don't have an account?
-          <span class="blue--text"> Create one</span></v-btn
+          <span class="primary--text"> Create one</span></v-btn
         >
       </v-card-text>
       <v-card-text>or</v-card-text>
