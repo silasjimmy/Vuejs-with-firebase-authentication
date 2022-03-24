@@ -9,6 +9,31 @@
       <v-btn link to="/sign-in">Log in</v-btn>
     </v-app-bar>
 
+    <v-navigation-drawer app permanent>
+      <v-list-item two-line>
+        <v-list-item-avatar class="b"></v-list-item-avatar>
+        <v-list-item-content>
+          <v-list-item-title>Name</v-list-item-title>
+          <v-list-item-subtitle>Email</v-list-item-subtitle>
+        </v-list-item-content>
+      </v-list-item>
+
+      <v-divider></v-divider>
+
+      <v-list nav shaped>
+        <v-list-item-group>
+          <v-list-item>
+            <v-list-item-icon>
+              <v-icon>mdi-home</v-icon>
+            </v-list-item-icon>
+            <v-list-item-content>
+              <v-list-item-title>Home</v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+        </v-list-item-group>
+      </v-list>
+    </v-navigation-drawer>
+
     <v-main>
       <router-view />
     </v-main>

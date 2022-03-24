@@ -38,7 +38,14 @@
       </v-card-text>
       <v-card-text>or</v-card-text>
       <v-card-actions class="justify-center">
-        <v-btn outlined class="text-none" @click="googleCreate">Google</v-btn>
+        <v-btn outlined class="text-none" @click="googleCreate">
+          <v-img
+            width="20px"
+            height="20px"
+            src="../assets/icons/google.svg"
+          ></v-img>
+          <span class="ml-2">Google</span>
+        </v-btn>
       </v-card-actions>
     </v-card>
   </v-sheet>
