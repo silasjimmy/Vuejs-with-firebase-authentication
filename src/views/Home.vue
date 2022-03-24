@@ -1,5 +1,5 @@
 <template>
-  <v-container class="text-center">
+  <v-container class="text-center pt-16">
     <p>
       Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestiae fuga
       harum aspernatur a sequi facere? Vel culpa mollitia eos, quam, tempora in

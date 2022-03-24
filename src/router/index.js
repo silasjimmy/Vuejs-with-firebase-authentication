@@ -5,6 +5,7 @@ import About from '../views/About.vue'
 import SignIn from '../views/SignIn.vue'
 import SignUp from '../views/SignUp.vue'
 import Dashboard from '../views/Dashboard.vue'
+import checkAuth from './guard'
 
 Vue.use(VueRouter)
 
@@ -32,7 +33,10 @@ const routes = [
   {
     path: '/dashboard',
     name: 'dashboard',
-    component: Dashboard
+    component: Dashboard,
+    meta: {
+      requiresAuth: true
+    }
   },
   {
     path: '/',
@@ -45,5 +49,7 @@ const router = new VueRouter({
   base: process.env.BASE_URL,
   routes
 })
+
+router.beforeEach(checkAuth)
 
 export default router
