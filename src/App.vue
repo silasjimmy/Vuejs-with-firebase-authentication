@@ -1,7 +1,11 @@
 <template>
   <v-app>
-    <v-app-bar app color="primary" dark>
+    <v-app-bar app elevate-on-scroll color="primary">
       <v-app-bar-title>Authentication</v-app-bar-title>
+
+      <v-spacer></v-spacer>
+
+      <v-btn link to="/sign-in">Log in</v-btn>
     </v-app-bar>
 
     <v-main>
@@ -17,4 +21,7 @@ export default {
 </script>
 
 <style>
+html {
+  overflow: auto !important;
+}
 </style>
