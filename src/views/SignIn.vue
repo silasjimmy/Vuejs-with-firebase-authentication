@@ -28,7 +28,9 @@
             v-model="password"
           ></v-text-field>
         </v-form>
-        <v-btn color="primary" @click="emailLogin">Log in</v-btn>
+        <v-btn color="primary" :loading="loadEmailLogin" @click="emailLogin"
+          >Log in</v-btn
+        >
       </v-card-text>
       <v-card-text class="py-0">
         <v-btn text link to="/sign-up" class="text-none"
@@ -38,7 +40,12 @@
       </v-card-text>
       <v-card-text>or</v-card-text>
       <v-card-actions class="justify-center">
-        <v-btn outlined class="text-none" @click="googleLogin">
+        <v-btn
+          outlined
+          class="text-none"
+          :loading="loadGoogleLogin"
+          @click="googleLogin"
+        >
           <v-img
             width="20px"
             height="20px"
@@ -52,6 +59,13 @@
 </template>
 
 <script>
+import {
+  getAuth,
+  GoogleAuthProvider,
+  signInWithEmailAndPassword,
+  signInWithPopup,
+} from "firebase/auth";
+
 export default {
   name: "SignIn",
   title: "Sign in",
@@ -60,19 +74,38 @@ export default {
       email: "",
       password: "",
       showPassword: false,
+      loadEmailLogin: false,
+      loadGoogleLogin: false,
       rules: {
         required: (value) => !!value || "This field is required!",
       },
     };
   },
   methods: {
-    emailLogin() {
+    async emailLogin() {
       if (this.$refs.loginForm.validate()) {
-        console.log(this.email, this.password);
+        try {
+          this.loadEmailLogin = true;
+          const auth = getAuth();
+          await signInWithEmailAndPassword(auth, this.email, this.password);
+        } catch (error) {
+          console.log(error);
+        } finally {
+          this.loadEmailLogin = false;
+        }
       }
     },
-    googleLogin() {
-      console.log("Login!");
+    async googleLogin() {
+      try {
+        this.loadGoogleLogin = true;
+        const auth = getAuth();
+        const provider = new GoogleAuthProvider();
+        await signInWithPopup(auth, provider);
+      } catch (error) {
+        console.log(error);
+      } finally {
+        this.loadGoogleLogin = false;
+      }
     },
   },
   computed: {

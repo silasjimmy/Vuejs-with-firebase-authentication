@@ -28,7 +28,9 @@
             v-model="password"
           ></v-text-field>
         </v-form>
-        <v-btn color="primary" @click="emailCreate">create</v-btn>
+        <v-btn color="primary" :loading="loadEmailCreate" @click="emailCreate"
+          >create</v-btn
+        >
       </v-card-text>
       <v-card-text class="py-0">
         <v-btn text link to="/sign-in" class="text-none"
@@ -38,7 +40,12 @@
       </v-card-text>
       <v-card-text>or</v-card-text>
       <v-card-actions class="justify-center">
-        <v-btn outlined class="text-none" @click="googleCreate">
+        <v-btn
+          outlined
+          class="text-none"
+          :loading="loadGoogleCreate"
+          @click="googleCreate"
+        >
           <v-img
             width="20px"
             height="20px"
@@ -52,6 +59,13 @@
 </template>
 
 <script>
+import {
+  getAuth,
+  GoogleAuthProvider,
+  createUserWithEmailAndPassword,
+  signInWithPopup,
+} from "firebase/auth";
+
 export default {
   name: "SignUp",
   title: "Sign up",
@@ -60,6 +74,8 @@ export default {
       email: "",
       password: "",
       showPassword: false,
+      loadEmailCreate: false,
+      loadGoogleCreate: false,
       rules: {
         required: (value) => !!value || "This field is required!",
         emailFormat: (value) => {
@@ -76,13 +92,31 @@ export default {
     };
   },
   methods: {
-    emailCreate() {
+    async emailCreate() {
       if (this.$refs.createForm.validate()) {
-        console.log(this.email, this.password);
+        try {
+          this.loadEmailCreate = true;
+          const auth = getAuth();
+          await createUserWithEmailAndPassword(auth, this.email, this.password);
+        } catch (error) {
+          console.log(error);
+        } finally {
+          this.loadEmailCreate = false;
+        }
       }
     },
-    googleCreate() {
-      console.log("Create account!");
+    async googleCreate() {
+      try {
+        this.loadGoogleCreate = true;
+
+        const auth = getAuth();
+        const provider = new GoogleAuthProvider();
+        await signInWithPopup(auth, provider);
+      } catch (error) {
+        console.log(error);
+      } finally {
+        this.loadGoogleCreate = false;
+      }
     },
   },
   computed: {

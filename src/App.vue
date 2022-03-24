@@ -1,15 +1,36 @@
 <template>
   <v-app>
-    <v-app-bar app elevate-on-scroll color="primary">
-      <v-app-bar-title>Authentication</v-app-bar-title>
+    <v-app-bar app elevate-on-scroll>
+      <v-app-bar-nav-icon v-if="$store.loggedIn"></v-app-bar-nav-icon>
+
+      <v-app-bar-title>
+        <router-link to="/home" class="text-decoration-none black--text"
+          >Authentication</router-link
+        >
+      </v-app-bar-title>
 
       <v-spacer></v-spacer>
 
-      <v-btn link text to="/about" class="mx-2">About</v-btn>
-      <v-btn link to="/sign-in">Log in</v-btn>
+      <v-btn
+        link
+        text
+        to="/about"
+        class="mx-2 text-none"
+        v-if="!$store.loggedIn"
+        >About</v-btn
+      >
+      <v-btn
+        outlined
+        link
+        active-class="primary white--text"
+        class="text-none"
+        to="/sign-in"
+        v-if="!$store.loggedIn"
+        >Sign in</v-btn
+      >
     </v-app-bar>
 
-    <v-navigation-drawer app permanent>
+    <v-navigation-drawer app permanent v-if="$store.loggedIn">
       <v-list-item two-line>
         <v-list-item-avatar class="b"></v-list-item-avatar>
         <v-list-item-content>
@@ -32,17 +53,57 @@
           </v-list-item>
         </v-list-item-group>
       </v-list>
+
+      <v-btn block color="primary" @click="logout">Log out</v-btn>
     </v-navigation-drawer>
 
     <v-main>
       <router-view />
     </v-main>
+
+    <v-fade-transition>
+      <v-overlay absolute :opacity="1" :z-index="999" v-model="overlay">
+        <loader></loader>
+      </v-overlay>
+    </v-fade-transition>
   </v-app>
 </template>
 
 <script>
+import { getAuth, signOut, onAuthStateChanged } from "@firebase/auth";
+import Loader from "@/components/Loader.vue";
+
 export default {
   name: "App",
+  created() {
+    this.overlay = true;
+
+    const auth = getAuth();
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        this.$store.commit("setLoggedIn", true);
+        console.log(user);
+        this.overlay = false;
+      } else {
+        this.$store.commit("setLoggedIn", false);
+        this.overlay = false;
+      }
+    });
+  },
+  data() {
+    return {
+      overlay: false,
+    };
+  },
+  methods: {
+    async logout() {
+      const auth = getAuth();
+      await signOut(auth);
+    },
+  },
+  components: {
+    Loader,
+  },
 };
 </script>
 
