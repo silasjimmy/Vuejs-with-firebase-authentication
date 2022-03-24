@@ -5,6 +5,7 @@
 
       <v-spacer></v-spacer>
 
+      <v-btn link text to="/about" class="mx-2">About</v-btn>
       <v-btn link to="/sign-in">Log in</v-btn>
     </v-app-bar>
 
@@ -21,6 +22,10 @@ export default {
 </script>
 
 <style>
+.b {
+  border: 1px solid black;
+}
+
 html {
   overflow: auto !important;
 }

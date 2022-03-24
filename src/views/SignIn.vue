@@ -1,32 +1,47 @@
 <template>
-  <v-card outlined class="mx-auto" :width="cardWidth">
-    <v-card-title class="justify-center">Welcome back!</v-card-title>
-    <v-card-subtitle class="text-center">Log in to continue</v-card-subtitle>
-    <v-card-text class="text-center">
-      <v-text-field
-        outlined
-        dense
-        prepend-icon="mdi-email"
-        label="Email address"
-        type="email"
-        v-model="email"
-      ></v-text-field>
-      <v-text-field
-        outlined
-        dense
-        prepend-icon="mdi-lock"
-        append-icon="mdi-eye-off"
-        label="Password"
-        type="password"
-        v-model="password"
-      ></v-text-field>
-      <v-btn color="primary" @click="emailLogin">Submit</v-btn>
-    </v-card-text>
-    <v-card-text class="text-center">or</v-card-text>
-    <v-card-actions class="justify-center">
-      <v-btn outlined class="text-none" @click="googleLogin">Google</v-btn>
-    </v-card-actions>
-  </v-card>
+  <v-sheet class="d-flex align-center justify-center" height="100%">
+    <v-card outlined :width="cardWidth" class="text-center">
+      <v-card-title class="justify-center">Welcome back!</v-card-title>
+      <v-card-subtitle>Log in to continue</v-card-subtitle>
+      <v-card-text>
+        <v-form lazy-validation ref="loginForm">
+          <v-text-field
+            outlined
+            dense
+            clearable
+            :rules="[rules.required]"
+            prepend-icon="mdi-email"
+            label="Email address"
+            type="email"
+            v-model="email"
+          ></v-text-field>
+          <v-text-field
+            outlined
+            dense
+            clearable
+            :rules="[rules.required]"
+            :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
+            :type="showPassword ? 'text' : 'password'"
+            @click:append="() => (showPassword = !showPassword)"
+            prepend-icon="mdi-lock"
+            label="Password"
+            v-model="password"
+          ></v-text-field>
+        </v-form>
+        <v-btn color="primary" @click="emailLogin">Log in</v-btn>
+      </v-card-text>
+      <v-card-text class="py-0">
+        <v-btn text link to="/sign-up" class="text-none"
+          >Don't have an account?
+          <span class="blue--text"> Create one</span></v-btn
+        >
+      </v-card-text>
+      <v-card-text>or</v-card-text>
+      <v-card-actions class="justify-center">
+        <v-btn outlined class="text-none" @click="googleLogin">Google</v-btn>
+      </v-card-actions>
+    </v-card>
+  </v-sheet>
 </template>
 
 <script>
@@ -37,11 +52,17 @@ export default {
     return {
       email: "",
       password: "",
+      showPassword: false,
+      rules: {
+        required: (value) => !!value || "This field is required!",
+      },
     };
   },
   methods: {
     emailLogin() {
-      console.log(this.email, this.password);
+      if (this.$refs.loginForm.validate()) {
+        console.log(this.email, this.password);
+      }
     },
     googleLogin() {
       console.log("Login!");

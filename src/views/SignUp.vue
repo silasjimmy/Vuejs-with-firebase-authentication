@@ -1,34 +1,47 @@
 <template>
-  <v-card outlined class="mx-auto" :width="cardWidth">
-    <v-card-title class="justify-center">Get started!</v-card-title>
-    <v-card-subtitle class="text-center"
-      >Create an account to continue</v-card-subtitle
-    >
-    <v-card-text class="text-center">
-      <v-text-field
-        outlined
-        dense
-        prepend-icon="mdi-email"
-        label="Email address"
-        type="email"
-        v-model="email"
-      ></v-text-field>
-      <v-text-field
-        outlined
-        dense
-        prepend-icon="mdi-lock"
-        append-icon="mdi-eye-off"
-        label="Password"
-        type="password"
-        v-model="password"
-      ></v-text-field>
-      <v-btn color="primary" @click="emailCreate">Submit</v-btn>
-    </v-card-text>
-    <v-card-text class="text-center">or</v-card-text>
-    <v-card-actions class="justify-center">
-      <v-btn outlined class="text-none" @click="googleCreate">Google</v-btn>
-    </v-card-actions>
-  </v-card>
+  <v-sheet class="d-flex align-center justify-center" height="100%">
+    <v-card outlined :width="cardWidth" class="text-center">
+      <v-card-title class="justify-center">Get started!</v-card-title>
+      <v-card-subtitle>Create an account to continue</v-card-subtitle>
+      <v-card-text>
+        <v-form lazy-validation ref="createForm">
+          <v-text-field
+            outlined
+            dense
+            clearable
+            :rules="[rules.required, rules.emailFormat]"
+            prepend-icon="mdi-email"
+            label="Email address"
+            type="email"
+            v-model="email"
+          ></v-text-field>
+          <v-text-field
+            outlined
+            dense
+            clearable
+            :rules="[rules.required, rules.passwordLength]"
+            :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
+            :type="showPassword ? 'text' : 'password'"
+            @click:append="() => (showPassword = !showPassword)"
+            label="Password"
+            prepend-icon="mdi-lock"
+            v-model="password"
+          ></v-text-field>
+        </v-form>
+        <v-btn color="primary" @click="emailCreate">create</v-btn>
+      </v-card-text>
+      <v-card-text class="py-0">
+        <v-btn text link to="/sign-in" class="text-none"
+          >Already have an account?
+          <span class="blue--text"> Log in</span></v-btn
+        >
+      </v-card-text>
+      <v-card-text>or</v-card-text>
+      <v-card-actions class="justify-center">
+        <v-btn outlined class="text-none" @click="googleCreate">Google</v-btn>
+      </v-card-actions>
+    </v-card>
+  </v-sheet>
 </template>
 
 <script>
@@ -39,11 +52,27 @@ export default {
     return {
       email: "",
       password: "",
+      showPassword: false,
+      rules: {
+        required: (value) => !!value || "This field is required!",
+        emailFormat: (value) => {
+          const pattern =
+            /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+          return pattern.test(value) || "Invalid e-mail address!";
+        },
+        passwordLength: (value) => {
+          if (value)
+            return value.length >= 8 || "Minimum of 8 characters required!";
+          return "";
+        },
+      },
     };
   },
   methods: {
     emailCreate() {
-      console.log(this.email, this.password);
+      if (this.$refs.createForm.validate()) {
+        console.log(this.email, this.password);
+      }
     },
     googleCreate() {
       console.log("Create account!");
