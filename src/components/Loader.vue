@@ -3,7 +3,7 @@
     <v-card-subtitle>{{ message }}</v-card-subtitle>
     <v-card-text>
       <v-progress-linear
-        color="primary"
+        color="success"
         indeterminate
         rounded
         height="6"

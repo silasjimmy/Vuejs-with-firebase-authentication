@@ -1,12 +1,19 @@
 <template>
   <v-container class="text-center pt-16">
     <p>
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestiae fuga
-      harum aspernatur a sequi facere? Vel culpa mollitia eos, quam, tempora in
-      beatae esse dolorum voluptate, quibusdam perferendis aliquid est.
+      A simple demonstration on how to authenticate users using firebase
+      authentication. Feel free to improve on anything.
     </p>
 
-    <v-btn link color="primary" class="text-none" to="/sign-up">Register</v-btn>
+    <v-btn
+      link
+      rounded
+      depressed
+      color="success"
+      class="text-none"
+      to="/sign-up"
+      >Create account</v-btn
+    >
   </v-container>
 </template>
 

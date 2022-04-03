@@ -4,7 +4,9 @@
       <v-app-bar-nav-icon v-if="$store.state.loggedIn"></v-app-bar-nav-icon>
 
       <v-toolbar-title>
-        <router-link to="/home" class="text-decoration-none black--text"
+        <router-link
+          to="/home"
+          class="text-decoration-none black--text font-weight-bold"
           >Authentication</router-link
         >
       </v-toolbar-title>
@@ -13,21 +15,13 @@
 
       <v-btn
         link
-        text
+        rounded
+        depressed
+        color="success"
         to="/sign-in"
-        active-class="primary--text"
-        class="mx-2 text-none"
+        class="text-none"
         v-if="!$store.state.loggedIn"
         >Sign in</v-btn
-      >
-      <v-btn
-        text
-        link
-        active-class="primary--text"
-        class="text-none"
-        to="/sign-up"
-        v-if="!$store.state.loggedIn"
-        >Sign up</v-btn
       >
     </v-app-bar>
 
@@ -115,5 +109,9 @@ export default {
 
 html {
   overflow: auto !important;
+}
+
+.theme--light.v-app-bar.v-toolbar.v-sheet {
+  background-color: #ffffff !important;
 }
 </style>

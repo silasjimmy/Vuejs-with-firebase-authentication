@@ -1,6 +1,6 @@
 <template>
   <v-sheet class="d-flex align-center justify-center" height="100%">
-    <v-card outlined :width="cardWidth" class="text-center">
+    <v-card outlined :width="cardWidth" class="text-center rounded-lg">
       <v-card-title class="justify-center">Welcome back!</v-card-title>
       <v-card-subtitle>Log in to continue</v-card-subtitle>
       <v-alert
@@ -20,6 +20,9 @@
             outlined
             dense
             clearable
+            rounded
+            single-line
+            color="success"
             :rules="[rules.required]"
             prepend-icon="mdi-email"
             label="Email address"
@@ -30,6 +33,9 @@
             outlined
             dense
             clearable
+            rounded
+            single-line
+            color="success"
             :rules="[rules.required]"
             :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
             :type="showPassword ? 'text' : 'password'"
@@ -40,7 +46,9 @@
           ></v-text-field>
         </v-form>
         <v-btn
-          color="primary"
+          depressed
+          rounded
+          color="success"
           class="text-none"
           :loading="loadEmailLogin"
           @click="emailLogin"
@@ -48,15 +56,23 @@
         >
       </v-card-text>
       <v-card-text class="py-0">
-        <v-btn text link to="/sign-up" class="text-none"
+        <v-btn
+          text
+          rounded
+          link
+          to="/sign-up"
+          class="text-none font-weight-regular"
           >Don't have an account?
-          <span class="primary--text"> Create one</span></v-btn
+          <span class="success--text font-weight-medium">
+            Create one</span
+          ></v-btn
         >
       </v-card-text>
       <v-card-text>or</v-card-text>
       <v-card-actions class="justify-center">
         <v-btn
           outlined
+          rounded
           class="text-none"
           :loading="loadGoogleLogin"
           @click="googleLogin"
@@ -129,7 +145,20 @@ export default {
   },
   computed: {
     cardWidth() {
-      return "35vw";
+      switch (this.$vuetify.breakpoint.name) {
+        case "xs":
+          return "100vw";
+        case "sm":
+          return "70vw";
+        case "md":
+          return "50vw";
+        case "lg":
+          return "40vw";
+        case "xl":
+          return "30vw";
+        default:
+          return "100vw";
+      }
     },
   },
 };
