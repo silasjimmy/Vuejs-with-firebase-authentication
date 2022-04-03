@@ -123,6 +123,8 @@ export default {
           const auth = getAuth();
           await signInWithEmailAndPassword(auth, this.email, this.password);
           this.loadEmailLogin = false;
+
+          this.$router.replace({ name: "dashboard" });
         } catch (error) {
           this.loadEmailLogin = false;
           this.alertMessage = firebaseErrorMessages(error.code);
@@ -136,10 +138,10 @@ export default {
         const auth = getAuth();
         const provider = new GoogleAuthProvider();
         await signInWithPopup(auth, provider);
+        this.loadGoogleLogin = false;
+        this.$router.replace({ name: "dashboard" });
       } catch (error) {
         console.log(error);
-      } finally {
-        this.loadGoogleLogin = false;
       }
     },
   },

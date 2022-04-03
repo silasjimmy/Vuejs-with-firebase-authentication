@@ -7,15 +7,19 @@ const defaultSate = {
   user: {
     email: ""
   },
-  loggedIn: false,
+  loadingOverlay: false,
+  loggedIn: null,
   online: false,
 }
 
 export default new Vuex.Store({
   state: { ...defaultSate },
   mutations: {
-    reset_state(state) {
+    resetState(state) {
       Object.assign(state, defaultSate)
+    },
+    setLoadingOverlay(state, status) {
+      state.loadingOverlay = status
     },
     setUser(state, user) {
       state.user = { ...user }

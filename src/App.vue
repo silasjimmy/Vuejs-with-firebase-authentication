@@ -57,7 +57,12 @@
     </v-main>
 
     <v-fade-transition>
-      <v-overlay absolute :opacity="1" :z-index="999" v-model="overlay">
+      <v-overlay
+        absolute
+        :opacity="1"
+        :z-index="999"
+        v-model="$store.state.loadingOverlay"
+      >
         <loader></loader>
       </v-overlay>
     </v-fade-transition>
@@ -65,34 +70,13 @@
 </template>
 
 <script>
-import { getAuth, signOut, onAuthStateChanged } from "@firebase/auth";
+import { getAuth, signOut } from "@firebase/auth";
 import Loader from "@/components/Loader.vue";
 
 export default {
   name: "App",
-  created() {
-    this.overlay = true;
-
-    const auth = getAuth();
-    onAuthStateChanged(auth, (user) => {
-      if (user) {
-        const userData = {
-          email: user.email,
-        };
-
-        this.$store.commit("setUser", userData);
-        this.$store.commit("setLoggedIn", true);
-        this.overlay = false;
-      } else {
-        this.$store.commit("reset_state");
-        this.overlay = false;
-      }
-    });
-  },
   data() {
-    return {
-      overlay: false,
-    };
+    return {};
   },
   methods: {
     async logout() {
