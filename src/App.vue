@@ -1,33 +1,33 @@
 <template>
   <v-app>
     <v-app-bar app elevate-on-scroll>
-      <v-app-bar-nav-icon v-if="$store.loggedIn"></v-app-bar-nav-icon>
+      <v-app-bar-nav-icon v-if="$store.state.loggedIn"></v-app-bar-nav-icon>
 
-      <v-app-bar-title>
+      <v-toolbar-title>
         <router-link to="/home" class="text-decoration-none black--text"
           >Authentication</router-link
         >
-      </v-app-bar-title>
+      </v-toolbar-title>
 
       <v-spacer></v-spacer>
 
       <v-btn
         link
         text
-        to="/about"
+        to="/sign-in"
         active-class="primary--text"
         class="mx-2 text-none"
-        v-if="!$store.loggedIn"
-        >About</v-btn
+        v-if="!$store.state.loggedIn"
+        >Sign in</v-btn
       >
       <v-btn
         text
         link
         active-class="primary--text"
         class="text-none"
-        to="/sign-in"
-        v-if="!$store.loggedIn"
-        >Sign in</v-btn
+        to="/sign-up"
+        v-if="!$store.state.loggedIn"
+        >Sign up</v-btn
       >
     </v-app-bar>
 
@@ -58,7 +58,7 @@
       <v-btn block color="primary" @click="logout">Log out</v-btn>
     </v-navigation-drawer>
 
-    <v-main>
+    <v-main class="px-2">
       <router-view />
     </v-main>
 

@@ -3,6 +3,17 @@
     <v-card outlined :width="cardWidth" class="text-center">
       <v-card-title class="justify-center">Get started!</v-card-title>
       <v-card-subtitle>Create an account to continue</v-card-subtitle>
+      <v-alert
+        dense
+        outlined
+        dismissible
+        class="mb-0 mx-4"
+        type="error"
+        transition="fade-transition"
+        v-model="showAlert"
+      >
+        {{ alertMessage }}
+      </v-alert>
       <v-card-text>
         <v-form lazy-validation ref="createForm">
           <v-text-field
@@ -80,6 +91,8 @@ export default {
       showPassword: false,
       loadEmailCreate: false,
       loadGoogleCreate: false,
+      showAlert: false,
+      alertMessage: "Error occurred",
       rules: {
         required: (value) => !!value || "This field is required!",
         emailFormat: (value) => {
@@ -125,7 +138,20 @@ export default {
   },
   computed: {
     cardWidth() {
-      return "50vw";
+      switch (this.$vuetify.breakpoint.name) {
+        case "xs":
+          return "100vw";
+        case "sm":
+          return "70vw";
+        case "md":
+          return "50vw";
+        case "lg":
+          return "40vw";
+        case "xl":
+          return "30vw";
+        default:
+          return "100vw";
+      }
     },
   },
 };

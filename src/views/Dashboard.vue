@@ -1,7 +1,7 @@
 <template>
-  <div class="b">
-    <h1>Dashboard</h1>
-  </div>
+  <v-container>
+    <h1 class="text-center">Hello there!</h1>
+  </v-container>
 </template>
 
 <script>

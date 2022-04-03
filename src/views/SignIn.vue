@@ -3,6 +3,17 @@
     <v-card outlined :width="cardWidth" class="text-center">
       <v-card-title class="justify-center">Welcome back!</v-card-title>
       <v-card-subtitle>Log in to continue</v-card-subtitle>
+      <v-alert
+        dense
+        outlined
+        dismissible
+        class="mb-0 mx-4"
+        type="error"
+        transition="fade-transition"
+        v-model="showAlert"
+      >
+        {{ alertMessage }}
+      </v-alert>
       <v-card-text>
         <v-form lazy-validation ref="loginForm">
           <v-text-field
@@ -69,6 +80,7 @@ import {
   signInWithEmailAndPassword,
   signInWithPopup,
 } from "firebase/auth";
+import { firebaseErrorMessages } from "../utils";
 
 export default {
   name: "SignIn",
@@ -80,6 +92,8 @@ export default {
       showPassword: false,
       loadEmailLogin: false,
       loadGoogleLogin: false,
+      alertMessage: "Error occurred!",
+      showAlert: false,
       rules: {
         required: (value) => !!value || "This field is required!",
       },
@@ -92,10 +106,11 @@ export default {
           this.loadEmailLogin = true;
           const auth = getAuth();
           await signInWithEmailAndPassword(auth, this.email, this.password);
-        } catch (error) {
-          console.log(error);
-        } finally {
           this.loadEmailLogin = false;
+        } catch (error) {
+          this.loadEmailLogin = false;
+          this.alertMessage = firebaseErrorMessages(error.code);
+          this.showAlert = true;
         }
       }
     },
@@ -114,7 +129,7 @@ export default {
   },
   computed: {
     cardWidth() {
-      return "50vw";
+      return "35vw";
     },
   },
 };
