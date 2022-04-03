@@ -100,7 +100,7 @@ import { firebaseErrorMessages } from "../utils";
 
 export default {
   name: "SignIn",
-  title: "Sign in",
+  title: "Login",
   data() {
     return {
       email: "",

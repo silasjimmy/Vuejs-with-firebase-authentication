@@ -97,7 +97,7 @@ import {
 
 export default {
   name: "SignUp",
-  title: "Sign up",
+  title: "Create account",
   data() {
     return {
       email: "",

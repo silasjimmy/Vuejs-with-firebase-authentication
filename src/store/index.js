@@ -3,12 +3,23 @@ import Vuex from 'vuex'
 
 Vue.use(Vuex)
 
-export default new Vuex.Store({
-  state: {
-    loggedIn: false,
-    online: true,
+const defaultSate = {
+  user: {
+    email: ""
   },
+  loggedIn: false,
+  online: false,
+}
+
+export default new Vuex.Store({
+  state: { ...defaultSate },
   mutations: {
+    reset_state(state) {
+      Object.assign(state, defaultSate)
+    },
+    setUser(state, user) {
+      state.user = { ...user }
+    },
     setLoggedIn(state, status) {
       state.loggedIn = status
     },

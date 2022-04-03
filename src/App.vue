@@ -76,11 +76,15 @@ export default {
     const auth = getAuth();
     onAuthStateChanged(auth, (user) => {
       if (user) {
+        const userData = {
+          email: user.email,
+        };
+
+        this.$store.commit("setUser", userData);
         this.$store.commit("setLoggedIn", true);
-        console.log(user);
         this.overlay = false;
       } else {
-        this.$store.commit("setLoggedIn", false);
+        this.$store.commit("reset_state");
         this.overlay = false;
       }
     });
