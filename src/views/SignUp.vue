@@ -129,6 +129,8 @@ export default {
           this.loadEmailCreate = true;
           const auth = getAuth();
           await createUserWithEmailAndPassword(auth, this.email, this.password);
+
+          this.$router.replace({ name: "users" });
         } catch (error) {
           console.log(error);
         } finally {
@@ -143,6 +145,7 @@ export default {
         const auth = getAuth();
         const provider = new GoogleAuthProvider();
         await signInWithPopup(auth, provider);
+        this.$router.replace({ name: "users" });
       } catch (error) {
         console.log(error);
       } finally {
